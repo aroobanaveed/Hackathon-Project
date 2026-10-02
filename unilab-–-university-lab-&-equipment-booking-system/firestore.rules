@@ -1,0 +1,79 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Connection testing endpoint
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    function isValidBooking(data) {
+      return data.resourceId is string &&
+             data.userId is string &&
+             data.bookingDate is string &&
+             data.startTime is string &&
+             data.endTime is string &&
+             (data.quantity is int || data.quantity is float) &&
+             data.quantity >= 1;
+    }
+
+    // Users
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Departments
+    match /departments/{departmentId} {
+      allow read, write: if true;
+    }
+
+    // Labs
+    match /labs/{labId} {
+      allow read, write: if true;
+    }
+
+    // Equipment Categories
+    match /equipmentCategories/{categoryId} {
+      allow read, write: if true;
+    }
+
+    // Equipment
+    match /equipment/{equipmentId} {
+      allow read, write: if true;
+    }
+
+    // Bookings
+    match /bookings/{bookingId} {
+      allow read: if true;
+      allow create: if isValidBooking(request.resource.data);
+      allow update: if (request.resource.data.quantity is int || request.resource.data.quantity is float) && request.resource.data.quantity >= 1;
+      allow delete: if true;
+    }
+
+    // Issues
+    match /issues/{issueId} {
+      allow read, write: if true;
+    }
+
+    // Notifications
+    match /notifications/{notificationId} {
+      allow read, write: if true;
+    }
+
+    // Maintenance
+    match /maintenance/{maintenanceId} {
+      allow read, write: if true;
+    }
+
+    // Audit logs (append-only)
+    match /auditLogs/{logId} {
+      allow read, create: if true;
+      allow update, delete: if false;
+    }
+
+    // Settings
+    match /settings/{settingId} {
+      allow read, write: if true;
+    }
+  }
+}

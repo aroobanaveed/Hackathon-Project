@@ -1,0 +1,6 @@
+{
+  "name": "UniLab – University Lab & Equipment Booking System",
+  "description": "Comprehensive university laboratory and equipment booking, inventory management, approval workflows, conflict checking, and smart AI recommendations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
